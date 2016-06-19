@@ -14,37 +14,62 @@
 'use strict';
 
 // [START server]
-var Hapi = require('hapi');
+const Hapi = require('hapi');
+const path = require('path');
+const Inert = require('inert');
+const uuid = require('node-uuid');
+
 
 // Create a server with a host and port
 var server = new Hapi.Server();
+
+//server connection settings
 server.connection({
-  host: '0.0.0.0',
-  port: process.env.PORT || 8080
+    host: '0.0.0.0',
+    port: process.env.PORT || 8080,
+    routes: {
+        files: {
+            relativeTo: path.resolve('.', 'public')
+        }
+    }
+
 });
+
+
+
+
+
 // [END server]
-
-// [START index]
+// Add  route
+server.route([{
+    method: 'GET',
+    path: '/hello',
+    handler: function(request, reply) {
+        reply('Hello World! Hapi.js on Google App Engine.');
+    }
+}, {
+    method: 'GET',
+    path: '/uuid',
+    handler: function(request, reply) {
+        reply(uuid.v1());
+    }
+}]);
+//serve static files
+server.register(Inert, () => {});
 server.route({
-  method: 'GET',
-  path: '/',
-  handler: function (request, reply) {
-    reply('Hello World! Hapi.js on Google App Engine.');
-  }
-});
-// [END index]
-
-// Add another route
-server.route({
-  method: 'GET',
-  path: '/hello',
-  handler: function (request, reply) {
-    reply('Hello World! Hapi.js on Google App Engine.');
-  }
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+        directory: {
+            path: '.',
+            redirectToSlash: true,
+            index: ['index.html']
+        }
+    } // relativeTo: '/static/'
 });
 
 // [START server_start]
-server.start(function () {
-  console.log('Server running at:', server.info.uri);
+server.start(function() {
+    console.log('Server running at:', server.info.uri);
 });
 // [END server_start]
