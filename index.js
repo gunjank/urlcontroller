@@ -29,8 +29,9 @@ server.connection({
     port: process.env.PORT || 8080,
     
     routes: {
+        cors:true,
         files: {
-            cors:true,
+            
             relativeTo: path.resolve('.', 'build')
         }
     }
