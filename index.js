@@ -27,8 +27,10 @@ var server = new Hapi.Server();
 server.connection({
     host: '0.0.0.0',
     port: process.env.PORT || 8080,
+    
     routes: {
         files: {
+            cors:true,
             relativeTo: path.resolve('.', 'build')
         }
     }
