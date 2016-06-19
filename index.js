@@ -29,7 +29,7 @@ server.connection({
     port: process.env.PORT || 8080,
     routes: {
         files: {
-            relativeTo: path.resolve('.', 'public')
+            relativeTo: path.resolve('.', 'build')
         }
     }
 

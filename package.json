@@ -14,7 +14,7 @@
   },
   "scripts": {
    "postinstall": "typings install",
-    "start": "gulp",
+    "start": "node index.js",
     "test": "gulp test",
     "coveralls": "node ./node_modules/coveralls/bin/coveralls.js < ./report/remap/lcov.info",
     "deploy": "gcloud preview app deploy"
@@ -31,6 +31,8 @@
     "@ngstarter/systemjs-extension": "1.0.0-rc.3",
      "bootstrap-sass": "^3.3.6",
     "codelyzer": "0.0.23",
+    "font-awesome": "^4.6.3",
+    "glob": "^7.0.4",
     "bootstrap": "^3.3.6",
     "core-js": "^2.4.0",
     "hapi": "^13.0.0",
